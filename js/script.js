@@ -1,0 +1,119 @@
+$(document).ready(function(){
+    $('#lien_infobulle').hover(function(event){
+        $.ajax({
+            url: 'get_totals.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                let contenu = "<ul>";
+                data.forEach(function(item) {
+                    contenu += "<li>" + item.categorie + ": " + item.total_par_categorie + "€</li>";
+                });
+                contenu += "</ul>";
+                
+                $('#infobulle').html(contenu)
+                               .css({
+                                   top: event.pageY + 10 + 'px',
+                                   left: event.pageX + 10 + 'px'
+                               })
+                               .fadeIn();
+            }
+        });
+    }, function(){
+        $('#infobulle').fadeOut();
+    });
+
+    // Suivre la souris pour ajuster la position de l'infobulle
+    $('#lien_infobulle').mousemove(function(event){
+        $('#infobulle').css({
+            top: event.pageY + 10 + 'px',
+            left: event.pageX + 10 + 'px'
+        });
+    });
+
+    $('#nom_role').change(function(){
+        var selectValue = $(this).val(); // Obtenir la valeur sélectionnée
+        var inputValue;
+
+        // Définir une valeur en fonction de la sélection
+        switch (selectValue) {
+            case "Admin":
+                inputValue = 1;
+                break;
+            case "Éditeur":
+                inputValue = 2;
+                break;
+            case "Lecteur":
+                inputValue = 3;
+                break;
+            default:
+                inputValue = "";
+        }
+
+        // Mettre à jour le champ input avec la valeur correspondante
+        $('#role').val(inputValue);
+    });
+
+    // $('.facture').click(function(e){
+    //     e.preventDefault();
+    //     var lien = $(this).attr("href");
+    //     window.open(lien);
+
+    //     console.log(lien);
+    // })
+});    
+
+$(document).ready(function(){
+    // Variable pour stocker l'ID de l'article à supprimer
+    let articleIdToDelete = null;
+
+    // Quand le bouton "Supprimer" est cliqué (ouvre le modal)
+    $(document).on('click', '.btn-supp-article', function() {
+        articleIdToDelete = $(this).data('id'); // Récupère l'ID de l'article
+        // Met à jour l'URL du bouton de confirmation dans le modal
+        $('#btnSuppArticleModal').attr('href', 'index.php?action=supp&id=' + articleIdToDelete);
+    });
+});
+
+$(document).ready(function() {
+    $('#sendData').on('click', function(event) {
+        event.preventDefault(); // Empêche la redirection de l'ancre
+
+        var nomFichier = $(this).data('filename'); // Assure-toi que cette variable est correctement définie
+        console.log("Nom du fichier : " + nomFichier); // Vérifie que le nom du fichier est récupéré correctement
+
+        $.ajax({
+            url: "index.php?action=getExcel&nomFichier=" + encodeURIComponent(nomFichier), // URL vers ton action PHP
+            type: "GET",
+            success: function(response) {
+
+                console.log("Réponse du serveur :", response); // Affiche la réponse du serveur dans la console
+
+                // Modification de la couleur du bouton en vert
+                $('#sendData').removeClass('btn-outline-primary').addClass('btn-success');
+
+                // Changement du texte du bouton
+                $('#updateText').text('Mise à jour réussie');
+
+                // Changement du SVG du bouton
+                $('#updateImg').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database-check" viewBox="0 0 16 16"><path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514"/><path d="M12.096 6.223A5 5 0 0 0 13 5.698V7c0 .289-.213.654-.753 1.007a4.5 4.5 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.5 4.5 0 0 1-.813-.927Q8.378 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.6 4.6 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10q.393 0 .774-.024a4.5 4.5 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777M3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4"/></svg>');
+            },
+            error: function(xhr, status, error) {
+
+                console.log("Erreur :", error);
+                console.log("Détails de l'erreur :", xhr.responseText); // Affiche les détails de l'erreur dans la console
+
+                // Modification de la couleur du bouton en rouge
+                $('#sendData').removeClass('btn-outline-primary').addClass('btn-danger');
+
+                // Changement du texte du bouton
+                $('#updateText').text('Mise à jour a échoué');
+
+                // Changement du SVG du bouton
+                $('#updateImg').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database-dash" viewBox="0 0 16 16"><path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1"/><path d="M12.096 6.223A5 5 0 0 0 13 5.698V7c0 .289-.213.654-.753 1.007a4.5 4.5 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.5 4.5 0 0 1-.813-.927Q8.378 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.6 4.6 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10q.393 0 .774-.024a4.5 4.5 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777M3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4"/></svg>');
+
+                alert("Erreur lors du traitement des données : " + xhr.responseText);
+            }
+        });
+    });
+});
