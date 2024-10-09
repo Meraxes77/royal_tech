@@ -110,6 +110,9 @@ switch ($action) {
     case 'getExcel':
         $excelController->majArticles();
         break;
+    case 'getGainTotalAjax':
+        $articleController->getGainTotalAjax();
+        break;
     default:
         header("Location: index.php?action=login");
         break;

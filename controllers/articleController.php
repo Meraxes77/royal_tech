@@ -146,4 +146,21 @@
             }
         }
 
+        public function getGainTotalAjax() {
+            $articles = new Article();
+            if (isset($_GET['categorie'])) {
+                $categorie = $_GET['categorie'];
+                try {
+                    $gainTotal = $articles->getGainTotalParCategorie($categorie);
+                    echo json_encode(['gain_total' => $gainTotal]);
+                } catch (Exception $e) {
+                    // Retourner une réponse JSON en cas d'erreur
+                    echo json_encode(['error' => 'Erreur lors de la récupération du gain total']);
+                }
+            } else {
+                // Gérer le cas où le paramètre "categorie" est manquant
+                echo json_encode(['error' => 'Paramètre catégorie manquant']);
+            }
+        }
+
     }
