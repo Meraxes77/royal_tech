@@ -63,4 +63,31 @@
             }
         }
 
+        public function register() {
+            $user = new User;
+            $listeRole = $user->role();
+        
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                try {
+                    if (empty($_POST['login']) || empty($_POST['mdp'])) {
+                        echo "Veuillez remplir tous les champs !";
+                    } else {
+                        $user->login = $_POST['login'];
+                        $user->mdp = $_POST['mdp'];
+                        $user->role = $_POST['role'];
+        
+                        if ($user->createUser()) {
+                            echo "<script>alert('Compte créé avec succès !')</script>";
+                        } else {
+                            echo "<script>alert('Erreur lors de la création du compte.')</script>";
+                        }
+                    }
+                } catch (Exception $e) {
+                    echo "Erreur lors de l'enregistrement : " . $e->getMessage();
+                }
+            }
+        
+            require 'views/register.php';
+        }
+
     }

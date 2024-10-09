@@ -48,4 +48,45 @@ class User{
             return 'db_error'; // Indicateur pour une erreur de base de données
         }
     }
+
+    public function createUser() {
+        try {
+            $sql = "INSERT INTO utilisateur (login, mdp, id_role) VALUES (:login, :mdp, :role)";
+            $stmt = $this->conn->prepare($sql);
+
+            // Nettoyage des entrées
+            $cleaned_login = htmlspecialchars(strip_tags($this->login));
+            $cleaned_role = htmlspecialchars(strip_tags($this->role));
+
+            // Hachage du mot de passe
+            $hashed_password = password_hash($this->mdp, PASSWORD_BCRYPT);
+
+            // Liaison des paramètres
+            $stmt->bindParam(':login', $cleaned_login);
+            $stmt->bindParam(':mdp', $hashed_password);
+            $stmt->bindParam(':role', $cleaned_role);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
+            echo "Erreur lors de la création de l'utilisateur : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function role() {
+        try {
+            $listRole = array();
+            $sql = "SELECT id_role, role FROM `role`";
+            foreach ($this->conn->query($sql) as $row) {
+                $listRole[] = $row;
+            }
+            return $listRole;
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des rôles : " . $e->getMessage();
+            return [];
+        }
+    }
 }

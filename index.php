@@ -43,6 +43,9 @@ switch ($action) {
     case 'login':
         $userController->loginPage();
         break;
+    case 'register':
+        $userController->register();
+        break;
     case 'logout':
         session_start();
         session_unset();

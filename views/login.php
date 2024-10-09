@@ -15,21 +15,23 @@
             <br>
             <h6 class="card-subtitle mb-2 text-body-secondary">Connexion</h6>
             <form action="#" method="POST">
-                <?php if (isset($error)): ?>
-                    <div class="alert alert-danger mt-3">
-                        <?php echo $error; ?>
-                    </div>
-                <?php endif; ?>
                 <div class="">
                     <label for="login" class="form-label">Login</label>
                     <input type="text" class="form-control" id="login" name="login" autocomplete="username" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="">
                     <label for="mdp" class="form-label">Mot de passe</label>
                     <input type="password" class="form-control" id="mdp" name="mdp" autocomplete="current-password" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
-                <div class="form-group mt-2 d-flex justify-content-center">
+                <div class="form-group mt-2 d-flex justify-content-evenly">
                     <button type="submit" class="btn btn-success">Connexion</button>
+                    <a role="button" class="btn btn-info" href="index.php?action=register">Inscription</a>
                 </div>
             </form>
         </div>
