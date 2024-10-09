@@ -84,7 +84,7 @@ $(document).ready(function(){
         "columnDefs": [
             {
                 // Masquer la colonne pour les non-admins
-                "targets": [4], // Index de la colonne admin_column
+                "targets": [4], // Index de la colonne action
                 "visible": userRole === 'Admin' // Affiche seulement si l'utilisateur est admin
             }
         ],
