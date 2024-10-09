@@ -159,4 +159,14 @@ class Article{
         }
     }
 
+    public function getGainTotalParCategorie($categorie) {
+        $query = "CALL gainTotalParCategorie(:categorie, @gain_total)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':categorie', $categorie, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $result = $this->conn->query("SELECT @gain_total AS gain_total");
+        return $result->fetch(PDO::FETCH_ASSOC)['gain_total'];
+    }
+
 }

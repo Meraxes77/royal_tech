@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('#tableArticle').DataTable({
         "destroy": true,
+        "responsive": true,
         "ajax": {
             "url": "services/commanderAjax.php",
             "cache": false,
@@ -17,7 +18,7 @@ $(document).ready(function(){
                 "data": "categorie",
                 "render": function(data, type, row) {
                     // Ajoute un lien hypertexte avec data-bs-toggle pour l'infobulle Bootstrap
-                    return '<a href="#" class="category-link" data-bs-toggle="tooltip" title="' + data + ' :" data-categorie="' + data + '">' + data + '</a>';
+                    return '<a href="#" class="category-link" data-bs-toggle="tooltip" data-categorie="' + data + '">' + data + '</a>';
                 }
             },
             { "data": "quantite" }
@@ -44,14 +45,46 @@ $(document).ready(function(){
             }
         },
         "drawCallback": function() {
-            // Initialisation des tooltips Bootstrap après que le tableau soit dessiné
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
+
+            $('.category-link').on('mouseenter', function() {
+                var $link = $(this);
+                var categorie = $link.data('categorie');
+
+                // Appel AJAX pour récupérer le gain total
+                $.ajax({
+                    url: 'index.php?action=getGainTotalAjax',
+                    method: 'GET',
+                    data: { categorie: categorie },
+                    success: function(response) {
+                        console.log(response); // Vérifier la réponse dans la console
+                
+                        try {
+                            var data = JSON.parse(response);
+                            var gainTotal = data.gain_total || 'Non disponible';
+                
+                            // Ajout de title pour l'infobulle
+                            $link.attr('title', categorie + " : " + gainTotal + " €");
+
+                            // Créer l'infobulle
+                            var tooltip = bootstrap.Tooltip.getInstance($link[0]);
+                            if (tooltip) {
+                                tooltip.setContent({ title: categorie + " : " + gainTotal + " €" });
+                            } else {
+                                new bootstrap.Tooltip($link[0]);  // Créer un infobulle
+                                $link.tooltip('show');  // Affiche immédiatement l'infobulle
+                            }
+                        } catch (e) {
+                            console.error('Erreur lors du parsing JSON : ', e);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Erreur lors de la récupération du gain total :", error);
+                    }
+                });
             });
         }
     });
-})
+});
 
 
 $(document).ready(function(){
@@ -60,6 +93,7 @@ $(document).ready(function(){
 
     $('#tableArticleNonCommander').DataTable({
         "destroy": true,
+        "responsive": true,
         "ajax": {
             "url": "services/nonCommanderAjax.php",
             "cache": false,
@@ -115,6 +149,7 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('#tableCommande').DataTable({
         "destroy": true,
+        "responsive": true,
         "ajax": {
             "url": "services/CommandeAjax.php",
             "cache": false,
