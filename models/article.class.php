@@ -114,7 +114,7 @@ class Article{
     // Récupère la somme total vendu par catégorie
     public function getVolumesParCategorie() {
         try {
-            $sql = "SELECT article.categorie AS categorie, SUM(ligne.prix_unit) AS total
+            $sql = "SELECT article.categorie AS categorie, SUM(ligne.quantite * ligne.prix_unit) AS total
                     FROM article 
                     INNER JOIN ligne 
                     ON article.id_article = ligne.id_article 
