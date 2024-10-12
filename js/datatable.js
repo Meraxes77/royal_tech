@@ -3,7 +3,7 @@ $(document).ready(function(){
         "destroy": true,
         "responsive": true,
         "ajax": {
-            "url": "services/commanderAjax.php",
+            "url": "index.php?action=commanderAjax",
             "cache": false,
             "dataSrc": "",
             "error": function (xhr, error, thrown) {
@@ -95,7 +95,7 @@ $(document).ready(function(){
         "destroy": true,
         "responsive": true,
         "ajax": {
-            "url": "services/nonCommanderAjax.php",
+            "url": "index.php?action=nonCommanderAjax",
             "cache": false,
             "dataSrc": "",
             "error": function (xhr, error, thrown) {
@@ -148,10 +148,12 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     $('#tableCommande').DataTable({
+        "scrollY": true,
+        "autoHeight": true,
         "destroy": true,
         "responsive": true,
         "ajax": {
-            "url": "services/CommandeAjax.php",
+            "url": "index.php?action=commandeAjax",
             "cache": false,
             "dataSrc": "",
             "error": function (xhr, error, thrown) {

@@ -12,7 +12,7 @@
 </div>
 
     <div class="d-flex justify-content-center m-5">
-        <table id="tableListeExcel" class="nowrap table table-striped table-hover">
+        <table id="tableListeExcel" class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th class="text-center">Fichiers Excel</th>

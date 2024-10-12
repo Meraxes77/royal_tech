@@ -9,8 +9,8 @@
         <h1 class=" pt-2"><?php echo $title ?></h1>
     </div>
 
-    <div class="d-flex justify-content-center m-5">
-        <table id="tableCommande" class="nowrap table table-striped table-hover">
+    <div class="d-flex justify-content-center m-5 ">
+        <table id="tableCommande" class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th class="text-center">ID commande</th>

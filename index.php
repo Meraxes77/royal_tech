@@ -73,7 +73,6 @@ switch ($action) {
             $categorie = $articleController->listeCategorie();
 
             if(isset($_POST['id_article'])){
-
                 $articleController->modifier($_POST['id_article'], $_POST['designation'], $_POST['prix'], $_POST['categorie']);
 
             }
@@ -112,6 +111,15 @@ switch ($action) {
         break;
     case 'getGainTotalAjax':
         $articleController->getGainTotalAjax();
+        break;
+    case 'commandeAjax':
+        $articleController->commandeAjax();
+        break;
+    case 'commanderAjax':
+        $articleController->commanderAjax();
+        break;
+    case 'nonCommanderAjax':
+        $articleController->nonCommanderAjax();
         break;
     default:
         header("Location: index.php?action=login");

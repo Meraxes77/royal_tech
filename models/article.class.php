@@ -51,12 +51,11 @@ class Article{
         try {
             $sql = "INSERT INTO article (id_article, designation, prix, categorie) VALUES (:id_article, :designation, :prix, :categorie)";
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                ':id_article' => $id_article,
-                ':designation' => $designation,
-                ':prix' => $prix,
-                ':categorie' => $categorie
-            ]);
+            $stmt->bindParam(':id_article', $id_article);
+            $stmt->bindParam(':designation', $designation);
+            $stmt->bindParam(':prix', $prix);
+            $stmt->bindParam(':categorie', $categorie);
+            $stmt->execute();
             return true;
         } catch (PDOException $e) {
             echo "Erreur lors de l'insertion : " . $e->getMessage();
@@ -69,12 +68,11 @@ class Article{
         try {
             $sql = "UPDATE article SET designation = :designation, prix = :prix, categorie = :categorie WHERE id_article = :id_article";
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                ':designation' => $designation,
-                ':prix' => $prix,
-                ':categorie' => $categorie,
-                ':id_article' => $id_article
-            ]);
+            $stmt->bindParam(':designation', $designation);
+            $stmt->bindParam(':prix', $prix);
+            $stmt->bindParam(':categorie', $categorie);
+            $stmt->bindParam(':id_article', $id_article);
+            $stmt->execute();
             return true;
         } catch (PDOException $e) {
             echo "Erreur lors de la mise à jour : " . $e->getMessage();
@@ -87,7 +85,8 @@ class Article{
         try {
             $sql = "DELETE FROM article WHERE id_article = :id_article";
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':id_article' => $id_article]);
+            $stmt->bindParam(':id_article', $id_article);
+            $stmt->execute();
             return true;
         } catch (PDOException $e) {
             echo "Erreur lors de la suppression : " . $e->getMessage();

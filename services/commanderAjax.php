@@ -5,14 +5,5 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . "/../models/article.class.php";
 
-try {
-    $articles = new Article();
-    $records = $articles->getArticles();
 
-    header('Content-Type: application/json');
-    echo json_encode($records);
-} catch (Exception $e) {
-    header('Content-Type: application/json', true, 500);
-    echo json_encode(['error' => $e->getMessage()]);
-}
 ?>

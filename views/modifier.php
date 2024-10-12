@@ -13,15 +13,13 @@
     <div class="card" style="width: 30rem;">
         <div class="card-body">
             <form class="row g-3 add_table" id="modifier_form" action="" method="post" novalidate>
-                <fieldset disabled>
-                    <div class="">
-                        <label for="id_article" class="form-label">ID article</label>
-                        <input type="text" class="form-control" id="id_article" name="id_article" placeholder="Exemple : AA000" required value="<?php
-                        echo $article['id_article'];
-                        ?>">
-                        <div class="invalid-feedback"><p id="error_id_article"></p></div>
-                    </div>
-                </fieldset>
+                <div class="">
+                    <label for="id_article" class="form-label">ID article</label>
+                    <input type="text" class="form-control" id="id_article" name="id_article" required value="<?php
+                    echo $article['id_article'];
+                    ?>">
+                    <div class="invalid-feedback"><p id="error_id_article"></p></div>
+                </div>
                 <div class="">
                     <label for="designation" class="form-label">Désignation</label>
                     <input type="text" class="form-control" id="designation" name="designation" required value="<?php

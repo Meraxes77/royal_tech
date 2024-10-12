@@ -163,4 +163,43 @@
             }
         }
 
+        public function commandeAjax(){
+            try {
+                $articles = new Article();
+                $records = $articles->commandes();
+            
+                header('Content-Type: application/json');
+                echo json_encode($records);
+            } catch (Exception $e) {
+                header('Content-Type: application/json', true, 500);
+                echo json_encode(['error' => $e->getMessage()]);
+            }
+        }
+
+        public function commanderAjax(){
+            try {
+                $articles = new Article();
+                $records = $articles->getArticles();
+            
+                header('Content-Type: application/json');
+                echo json_encode($records);
+            } catch (Exception $e) {
+                header('Content-Type: application/json', true, 500);
+                echo json_encode(['error' => $e->getMessage()]);
+            }
+        }
+
+        public function nonCommanderAjax(){
+            try {
+                $articles = new Article();
+                $records = $articles->getArticlesNonCommander();
+            
+                header('Content-Type: application/json');
+                echo json_encode($records);
+            } catch (Exception $e) {
+                header('Content-Type: application/json', true, 500);
+                echo json_encode(['error' => $e->getMessage()]);
+            }
+        }
+
     }

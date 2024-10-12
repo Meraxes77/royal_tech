@@ -11,7 +11,7 @@
     </div>
     
     <div class="d-flex justify-content-center m-5">
-        <table id="tableArticleNonCommander" class="nowrap table table-striped table-hover" data-user-role="<?= $_SESSION['role']; ?>">
+        <table id="tableArticleNonCommander" class="table table-striped table-hover" data-user-role="<?= $_SESSION['role']; ?>">
             <thead class="table-dark">
                 <tr>
                     <th class="text-center">ID article</th>

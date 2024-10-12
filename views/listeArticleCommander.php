@@ -10,7 +10,7 @@
     </div>
     
     <div class="d-flex justify-content-center m-5">
-        <table id="tableArticle" class="nowrap table table-striped table-hover">
+        <table id="tableArticle" class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>Id article</th>
