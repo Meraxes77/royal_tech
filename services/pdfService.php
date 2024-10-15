@@ -24,25 +24,25 @@ class PdfService extends FPDF
         $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 
-    function TitreTable(){
+    function TitreTable($date){
         $this->SetFillColor(105, 105, 105);
         $this->SetTextColor(255);
         $this->SetFont('', 'B');
-        $this->Cell(75, 7, 'FACTURE', 0, 1, 'C', true);
-        $this->SetFillColor(224, 235, 255);
-        $this->SetTextColor(0);
-        $this->SetFont('');
+        $this->Cell(75, 7, iconv('UTF-8', 'ISO-8859-1','Commande N°') . $_GET['id'] . " du " . $date, 1, 1, 'C', true);
     }
 
     function Table($header, $data)
     {
         $this->SetFillColor(192, 192, 192);
+        $this->SetTextColor(0);
         $this->SetFont('', 'B');
         $w = array(75, 35, 30, 50);
         for ($i = 0; $i < count($header); $i++) {
             $this->Cell($w[$i], 7, iconv('UTF-8', 'windows-1252', $header[$i]), 1, 0, 'C', true);
         }
         $this->Ln();
+        $this->SetTextColor(0);
+        $this->SetFont('');
         foreach ($data as $row) {
             $this->Cell($w[0], 6, iconv('UTF-8', 'windows-1252', $row['designation']), 1, 0, 'C');
             $this->Cell($w[1], 6, iconv('UTF-8', 'windows-1252', $row['prix_unit'] . '€'), 1, 0, 'C');
@@ -51,16 +51,26 @@ class PdfService extends FPDF
             $this->Ln();
         }
         $this->Cell(array_sum($w), 0, '', 'T');
+        $this->Ln();
     }
 
     function TotalTable($totalHT, $totalTTC)
     {
+        $this->Cell(110, 7, '', 0, 1, 'C');
         $this->Cell(110, 7, '', 0, 0, 'C');
-        $this->Cell(30, 7, 'Total HT', 1, 0, 'C');
+        $this->SetTextColor(0);
+        $this->SetFont('', 'B');
+        $this->Cell(30, 7, 'Total HT', 1, 0, 'C', true);
+        $this->SetTextColor(0);
+        $this->SetFont('');
         $this->Cell(50, 7, iconv('UTF-8', 'windows-1252', $totalHT . '€'), 1, 1, 'C');
         $this->Cell(110, 7, '', 0, 0, 'C');
+        $this->SetTextColor(0);
+        $this->SetFont('', 'B');
         $this->Cell(30, 7, 'Total TTC', 1, 0, 'C', true);
-        $this->Cell(50, 7, iconv('UTF-8', 'windows-1252', $totalTTC . '€'), 1, 0, 'C', true);
+        $this->SetTextColor(0);
+        $this->SetFont('');
+        $this->Cell(50, 7, iconv('UTF-8', 'windows-1252', $totalTTC . '€'), 1, 0, 'C');
     }
 }
 ?>

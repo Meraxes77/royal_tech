@@ -36,7 +36,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Souhaitez vous vraiment supprimer l'article : 
+                Souhaitez vous vraiment supprimer l'article ?
             </div>
             <div class="modal-footer">
                 <a id="btnSuppArticleModal" href="#" class="btn btn-danger">Supprimer</a>

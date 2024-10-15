@@ -116,14 +116,17 @@
                 }
                 
                 // Créer le graphique en barres
-                $graph = new Graph(1250, 750);
+                $graph = new Graph(1250, 600);
                 $graph->SetScale('textlin');
-                $graph->img->SetMargin(60,30,40,50);
+                $graph->img->SetMargin(75,30,40,50);
                 
                 // Ajouter les labels des catégories
                 $graph->xaxis->SetTickLabels($categories);
                 $graph->xaxis->title->Set("Catégories");
                 $graph->yaxis->title->Set("Volume de Ventes");
+
+                // Décaler le titre de l'axe Y vers la gauche
+                $graph->yaxis->SetTitleMargin(50);
                 
                 // Ajouter un titre
                 $graph->title->Set("Volume de Ventes par Catégorie");
@@ -131,13 +134,17 @@
                 // Créer un histogramme avec les volumes
                 $barplot = new BarPlot($volumes);
                 
+                // Ajouter le graphique au graphe
+                $graph->Add($barplot);
+                
                 // Afficher les valeurs au-dessus des barres
                 $barplot->value->Show();
                 $barplot->value->SetFormat('%d');
-                $barplot->value->SetFont(FF_ARIAL, FS_NORMAL, 9);
-                
-                // Ajouter le graphique au graphe
-                $graph->Add($barplot);
+                $barplot->value->SetFont(FF_ARIAL, FS_BOLD, 11);
+                // Changer la couleur du texte au-dessus des barres
+                $barplot->value->SetColor("black");
+                // Définir les couleurs des barres
+                $barplot->SetFillColor(array('#FF0000', '#1ce447', '#2f00ff', 'black', '#e79315'));
                 
                 // Afficher uniquement l'image du graphique
                 $graph->Stroke();

@@ -63,4 +63,15 @@
             }
         }
 
+        public function logout(){
+            try{
+                session_start();
+                session_unset();
+                session_destroy();
+                header("Location: index.php?action=login");
+            }catch(Exception $e){
+                echo "Erreur lors de la déconnexion : " . $e->getMessage();
+            }
+        }
+
     }

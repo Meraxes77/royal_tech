@@ -40,9 +40,11 @@ class FactureController {
             $pdfService->Cell(0, 10, iconv('UTF-8', 'windows-1252', $client['adresse']), 0, 1, 'R');
             $pdfService->Cell(0, 10, iconv('UTF-8', 'windows-1252', $client['code_postal'] . ' ' . $client['ville']), 0, 1, 'R');
             $pdfService->Cell(0, 10, iconv('UTF-8', 'windows-1252', htmlspecialchars($client['mail'] ?? '')), 0, 1, 'R');
-    
+            
+            $date = $client['date_comm'];
+
             $pdfService->Ln();
-            $pdfService->TitreTable();
+            $pdfService->TitreTable($date);
             $pdfService->Table(['Désignation article', 'Prix unitaire', 'Quantité', 'Prix total HT'], $facture);
             $pdfService->TotalTable($totalHT, $totalTTC);
     

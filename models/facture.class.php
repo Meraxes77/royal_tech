@@ -20,7 +20,8 @@ class Facture {
                 INNER JOIN article ON ligne.id_article = article.id_article 
                 WHERE commande.id_comm = :id_comm";
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id_comm' => $id_comm]);
+            $stmt->bindParam(':id_comm', $id_comm);
+            $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e){
             echo "Erreur, lors de la récuperation des infos facture : " . $e->getMessage();
