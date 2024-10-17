@@ -92,6 +92,8 @@ $(document).ready(function(){
     var userRole = $('#tableArticleNonCommander').data('user-role');
 
     $('#tableArticleNonCommander').DataTable({
+        "scrollY": "350px",
+        "scrollCollapse": true,
         "destroy": true,
         "responsive": true,
         "ajax": {
@@ -148,8 +150,8 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     $('#tableCommande').DataTable({
-        "scrollY": true,
-        "autoHeight": true,
+        "scrollY": "350px",
+        "scrollCollapse": true,
         "destroy": true,
         "responsive": true,
         "ajax": {

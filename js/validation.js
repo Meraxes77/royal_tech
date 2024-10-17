@@ -1,23 +1,3 @@
-// // Example starter JavaScript for disabling form submissions if there are invalid fields
-// (() => {
-//     'use strict'
-  
-//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-//     const forms = document.querySelectorAll('#add_form')
-  
-//     // Loop over them and prevent submission
-//     Array.from(forms).forEach(form => {
-//       form.addEventListener('input', event => {
-//         if (!form.checkValidity()) {
-//           event.preventDefault()
-//           event.stopPropagation()
-//         }
-  
-//         form.classList.add('was-validated')
-//       }, false)
-//     })
-//   })()
-
 $('#id_article').on('input', function(){
 
     // Tous les caratères en majuscule
@@ -42,7 +22,7 @@ $('#id_article').on('input', function(){
 
 $('#designation').on('input', function(){
 
-    // Tous le 1er caratère en majuscule
+    // Le 1er caratère en majuscule
     this.value = this.value.charAt(0).toUpperCase() + this.value.substring(1).toLowerCase();
 
     if(designation.value.length >= 1){

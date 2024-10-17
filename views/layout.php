@@ -19,7 +19,7 @@
 <body class="d-flex flex-column m-0 vh-100">
 
     <div class="d-flex">
-        <aside class="<?php echo ($hidden == '') ? 'd-none' : '';echo ($hidden == 'login') ? 'd-none' : ''; echo ($hidden == 'register') ? 'd-none' : ''; ?>">
+        <aside class="<?php echo ($hidden == '') ? 'd-none' : ''; echo ($hidden == 'login') ? 'd-none' : ''; ?>">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" id="sidebar">
                 <div class="d-flex justify-content-center">
                     <img src="img/logo_societe.png" alt="" class="w-50">

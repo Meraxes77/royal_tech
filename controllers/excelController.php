@@ -55,9 +55,8 @@ class ExcelController {
                     $donnees = $sheet->toArray();
     
                     $articles = [];
-                    foreach ($donnees as $index => $ligne) {
-                        if ($index > 0) {  // Ignorer la première ligne (en-tête)
-                            // Assure-toi que les index correspondent bien aux colonnes dans l'ordre du fichier Excel
+                    foreach ($donnees as $ligne) {
+                        if ($ligne > 0) {  // Ignore la première ligne
                             $id_article = isset($ligne[0]) ? $ligne[0] : null;
                             $designation = isset($ligne[1]) ? $ligne[1] : null;
                             $prix = isset($ligne[2]) ? $ligne[2] : null;
@@ -65,8 +64,7 @@ class ExcelController {
         
                             $articles[] = new Article($id_article, $designation, $prix, $categorie);
                         }
-                    }
-    
+                    }    
     
                     // Nombre de lignes dans le fichier Excel, -1 pour ne pas prendre en compte l'en-tête
                     $nombreDeLignes = count($donnees) - 1;
@@ -103,8 +101,8 @@ class ExcelController {
                     $sheet = $spreadsheet->getActiveSheet();
                     $donnees = $sheet->toArray();
     
-                    foreach ($donnees as $index => $ligne) {
-                        if ($index > 0) {  // Ignorer la première ligne (en-tête)
+                    foreach ($donnees as $ligne) {
+                        if ($ligne > 0) {  // Ignorer la première ligne (en-tête)
                             $id_article = isset($ligne[0]) ? $ligne[0] : null;
                             $designation = isset($ligne[1]) ? $ligne[1] : null;
                             $prix = isset($ligne[2]) ? $ligne[2] : null;
